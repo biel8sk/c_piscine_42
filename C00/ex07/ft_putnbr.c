@@ -11,11 +11,13 @@ void	ft_putnbr(int nb)
 	{
 		ft_putnbr(nbl / 10);
 		ft_putnbr(nbl % 10);
+		return ;
 	}
 	else if (nbl < 0)
 	{
 		write(1, "-", 1);
-		ft_putnbr(-nbl);
+		ft_putnbr((-nbl) / 10);
+		ft_putnbr((-nbl) % 10);
 		return ;
 	}
 	else
@@ -26,10 +28,11 @@ void	ft_putnbr(int nb)
 	}
 }
 
-int main(void)
+/*int main(void)
 {
 	ft_putnbr(1024);
 	ft_putnbr(-1024);
 	ft_putnbr(-239432);
 	ft_putnbr(0);
-}
+	ft_putnbr(-2147483648);
+}*/
