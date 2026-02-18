@@ -8,7 +8,7 @@ void	ft_ultimate_div_mod(int *a, int *b)
 }
 
 
-int	main(int argc, char **argv)
+/*int	main(int argc, char **argv)
 {
 	(void) argc;
 
@@ -20,4 +20,4 @@ int	main(int argc, char **argv)
 	printf("before: %d, %d\n", a, b);
 	ft_ultimate_div_mod(&a, &b);
 	printf("after: %d, %d\n", a, b);	
-}
+}*/
