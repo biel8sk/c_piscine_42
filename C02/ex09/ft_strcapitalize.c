@@ -23,7 +23,6 @@ char	*ft_strcapitalize(char *str)
 	int i;
 
 	i = 0;
-	printf("execitando o metodo");
 	while (str[i] != 0)
 	{
 		if (i == 0 && is_lower(str[i]))
