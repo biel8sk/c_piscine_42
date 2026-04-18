@@ -22,27 +22,35 @@ void	write_phrase_hex(unsigned char *start, char *base, unsigned int i)
 	j = 0;
 	while(j < 16)
 	{
-		write(1, &base[start[j + i] >> 4], 1);
-		write(1, &base[start[j + i] % 16], 1);
-		write(1, &base[start[j + 1 + i] >> 4], 1);
-		write(1, &base[start[j + 1 + i] % 16], 1);
+		if (!start[j + i])
+		{
+			write(1, &base[start[j + i] >> 4], 1);
+			write(1, &base[start[j + i] % 16], 1);
+		}
+		if (!start[j + i + 1])
+		{
+			write(1, &base[start[j + 1 + i] >> 4], 1);
+			write(1, &base[start[j + 1 + i] % 16], 1);
+		}
 		write(1, " ", 1);
 		j += 2;
 	}
 }
-void	write_phrase_text(unsigned char *start)
+void	write_phrase_text(unsigned char *start, int limit)
 {
 	int	j;
 
 	j = 0;
-	while(j < 16)
+	while(j < limit)
 	{
-		if (*start < 32 || *start > 126)
+		if (*start <= 32 && *start > 126)
 			write(1, ".", 1);
 		else
 			write(1, &start[j], 1);
 		j++;
+		start++;
 	}
+	write(1, "\n", 1);
 }
 
 void	*ft_print_memory(void *addr, unsigned int size)
@@ -57,9 +65,16 @@ void	*ft_print_memory(void *addr, unsigned int size)
 	while(i < size)
 	{
 		write_mem_hex((unsigned long) &str, base);
-		write_phrase_hex((str + i), base, i);
-		write_phrase_text(str);
+		write_phrase_hex(str, base, i);
+		write_phrase_text(str, );
 		i += 16;
+		str += 16;
 	}
 	return (addr);
 }
+
+/*int	main(void)
+{
+	char str[] = "a v	ai 123aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+	ft_print_memory(str, 80);
+}*/
