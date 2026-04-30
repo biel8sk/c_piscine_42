@@ -21,11 +21,17 @@ void	write_phrase_hex(unsigned char *start, char *base, unsigned int charleft)
 	unsigned int	j;
 
 	j = 0;
-	while(j < charleft)
+	while(j < 16)
 	{
+		if (j > charleft)
+		{
+			write(1, " ", 1);
+			j++;
+			continue;
+		}
 		write(1, &base[start[j] >> 4], 1);
 		write(1, &base[start[j] % 16], 1);
-		if (j > 0 && j % 2 == 0)
+		if (j % 2 == 1)
 			write(1, " ", 1);
 		j++;
 	}
@@ -35,8 +41,14 @@ void	write_phrase_text(unsigned char *start, int charleft)
 	int	j;
 
 	j = 0;
-	while(j < charleft)
+	while(j < 16)
 	{
+		if (j > charleft)
+		{
+			write(1, " ", 1);
+			j++;
+			continue;
+		}
 		if (start[j] >= 32 && start[j] <= 126)
 			write(1, &start[j], 1);
 		else
@@ -67,7 +79,7 @@ void	*ft_print_memory(void *addr, unsigned int size)
 	while(i < size)
 	{
 		charleft = get_space_to_fill(size - i);
-		write_mem_hex((unsigned long) &str, base);
+		write_mem_hex((unsigned long) str, base);
 		write_phrase_hex(str, base, charleft);
 		write_phrase_text(str, charleft);
 		i += charleft;
