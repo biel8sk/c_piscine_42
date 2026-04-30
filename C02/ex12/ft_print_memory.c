@@ -23,14 +23,13 @@ void	write_phrase_hex(unsigned char *start, char *base, unsigned int charleft)
 	j = 0;
 	while(j < 16)
 	{
-		if (j > charleft)
+		if (j >= charleft)
+			write(1, "  ", 1);
+		else
 		{
-			write(1, " ", 1);
-			j++;
-			continue;
+			write(1, &base[start[j] >> 4], 1);
+			write(1, &base[start[j] % 16], 1);
 		}
-		write(1, &base[start[j] >> 4], 1);
-		write(1, &base[start[j] % 16], 1);
 		if (j % 2 == 1)
 			write(1, " ", 1);
 		j++;
@@ -43,12 +42,6 @@ void	write_phrase_text(unsigned char *start, int charleft)
 	j = 0;
 	while(j < 16)
 	{
-		if (j > charleft)
-		{
-			write(1, " ", 1);
-			j++;
-			continue;
-		}
 		if (start[j] >= 32 && start[j] <= 126)
 			write(1, &start[j], 1);
 		else
